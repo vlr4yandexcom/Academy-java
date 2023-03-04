@@ -1,0 +1,191 @@
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Input {
+    Scanner con = new Scanner(System.in);
+
+    public static void main(String[] args) {
+
+
+        Scanner con = new Scanner(System.in);
+
+        System.out.println("Введите выражение [2+2]  + Enter ");
+//        int a = con.nextInt();
+        int a = 0;
+//        String ch = " ";
+        int b = 0;
+        boolean isRoman;
+
+//      Считываем строку userIn которую ввёл пользователь
+        String userIn = con.nextLine();
+//      Создаём пустой символьный массив длиной 10 символов:  under_char
+        char[] under_char = new char[10];
+//      Заполняем символьный массив символами строки которую ввел пользователь и по ходу ловим знак операции
+        String ach = "";
+        char ch = 0;
+        String bch = "";
+        for (int i = 0; i < userIn.length(); i++) {
+            under_char[i] = userIn.charAt(i);
+            if (under_char[i] != '+' && under_char[i] != '-' && under_char[i] != '*' && under_char[i] != '/') {
+                bch = bch + under_char[i];
+            }
+
+            if (under_char[i] == '+') {
+                ch = '+';
+                ach = bch;
+                bch = "";
+
+            }
+            if (under_char[i] == '-') {
+                ch = '-';
+                ach = bch;
+                bch = "";
+            }
+            if (under_char[i] == '*') {
+                ch = '*';
+                ach = bch;
+                bch = "";
+            }
+            if (under_char[i] == '/') {
+                ch = '/';
+                ach = bch;
+                bch = "";
+            }
+
+
+//            else {
+//                //нет знака операции
+//                System.out.println("Используй знаки + - /  *");
+//                System.exit(0);
+//            }
+
+            //      else{System.out.println("Используй знаки + - /  *");
+            //           break;
+            //       }
+//            con.close();
+       /* }
+        if ((ch != '+'){
+            throw new Exception("Аргумент не +");
+        } */
+            //      if ((ch != '+') && (ch != '-') && (ch != '*') && (ch != '/')){
+            //          System.out.println("Используй знаки + - /  *");
+            //          break;
+        }
+        System.out.println("ach roman -" +Roman.isRoman(ach));
+        System.out.println("bch roman -" +Roman.isRoman(bch));
+
+
+        if ((ch != '+') && (ch != '-') && (ch != '/') && (ch != '*')){
+             System.out.println("Используй знаки + - /  *");
+             System.exit(0);
+            }
+
+            System.out.println("ach -   = " + ach);
+            System.out.println("ch -   = " + ch);
+            System.out.println("bch -   = " + bch);
+/*
+
+        String string03 = stable01.trim();
+*/
+
+
+
+        if ((Roman.isRoman(ach) == true) && (Roman.isRoman(bch) == true)){
+
+    System.out.println("Для двух римских");
+            // Конвертируем оба числа в арабские для вычисления действия
+            a = Roman.convertToArabian(ach);
+            b = Roman.convertToArabian(bch);
+            isRoman =true;
+
+            if (a>10 || a<0|| b<0 || b>10){
+                System.out.println("Используй числа от I до X");
+                System.exit(0);
+            }
+            if (a < b && ch == '-'){
+                System.out.println("Римляне не знали отрицательных чисел");
+                System.exit(0);
+            }
+            if (b == 0 && ch == '/'){
+                System.out.println("На ноль делить нельзя - ошибка  "+Roman.convertToRoman(a)+" / "+b);
+                System.exit(0);
+            }
+            int arabian = calc(a, b, ch);
+            int res = arabian;
+            String resR = Roman.convertToRoman(res);
+            String aR = Roman.convertToRoman(a);
+            String bR = Roman.convertToRoman(b);
+            System.out.println("Результ - " + aR + " " + ch + " " + bR + " = " + resR);
+            System.exit(0);
+        }//если оба числа арабские
+        else if ((!Roman.isRoman(ach) && !Roman.isRoman(bch)) || (!Roman.isRoman(ach) && Integer.parseInt(bch) == 0) || (Integer.parseInt(ach) == 0 && !Roman.isRoman(bch))){
+
+            isRoman = false;
+
+            try {
+                a = Integer.parseInt(ach);
+            } catch (Exception e) {
+                //   throw new Exception(e);
+                System.out.println("Чет-то не то с a -" + a);
+                System.exit(0);
+            }
+
+            try {
+                b = Integer.parseInt(bch);
+            } catch (NumberFormatException e) {
+                //  throw new RuntimeException(e);
+                System.out.println("Чет-то не то с b -" + b);
+                System.exit(0);
+            }
+
+        }
+        //если одно число римское, а другое - арабское
+        else {
+            System.out.println("Используй числа одного формата");
+            System.exit(0);
+ //           throw new Exception("Числа должны быть в одном формате");
+        }
+        if (a>10 || a<0|| b<0 || b>10){
+            System.out.println("Используй числа от 1 до 10");
+            System.exit(0);
+        }
+        if (b == 0 && ch == '/'){
+            System.out.println("На ноль делить нельзя - ошибка");
+            System.exit(0);
+        }
+        int arabian = calc(a, b, ch);
+            int res = arabian;
+        System.out.println("Для двух арабских");
+            System.out.println("Результ - " + a + " " + ch + " " + b + " = " + res);
+        }
+    static int calc(int a, int b, char oper) {
+        String znak=String.valueOf(oper);
+        if (znak.equals("+")) return a + b;
+        else if(znak.equals("-")) return a - b;
+        else if(znak.equals("*")) return a * b;
+        else return a/b;
+
+    }
+class Roman {
+    static String[] romanArray = new String[]{"0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV", "XVI", "XVII", "XVIII", "XIX", "XX", "XXI", "XXII", "XXIII", "XXIV", "XXV", "XXVI", "XXVII", "XXVIII", "XXIX", "XXX", "XXXI", "XXXII", "XXXIII", "XXXIV", "XXXV", "XXXVI", "XXXVII", "XXXVIII", "XXXIX", "XL", "XLI", "XLII", "XLIII", "XLIV", "XLV", "XLVI", "XLVII", "XLVIII", "XLIX", "L", "LI", "LII", "LIII", "LIV", "LV", "LVI", "LVII", "LVIII", "LIX",  "LX", "LXI", "LXII", "LXIII", "LXIV", "LXV", "LXVI", "LXVII", "LXVIII", "LXIX", "LXX", "LXXI", "LXXII", "LXXIII", "LXXIV", "LXXV", "LXXVI", "LXXVII", "LXXVIII", "LXXIX", "LXXX", "LXXXI", "LXXXII", "LXXXIII", "LXXXIV", "LXXXV", "LXXXVI",  "LXXXVII", "LXXXVIII", "LXXXIV","XC","XCI","XCII","XCIII","XCIV","XCV","XCVI","XCVII","XCVIII","XCIV", "C"};
+
+    public static boolean isRoman(String val) {
+        for (int i = 0; i< romanArray.length; i++) {
+            if (val.equals(romanArray[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int convertToArabian(String roman) {
+        for (int i = 0; i< romanArray.length; i++) {
+            if (roman.equals(romanArray[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static String convertToRoman(int arabian) { return romanArray[arabian];}
+}
+}
